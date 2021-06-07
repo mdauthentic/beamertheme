@@ -1,0 +1,166 @@
+% !TeX TS-program = xelatex
+\documentclass[9pt,xcolor=table]{beamer} %aspectratio=169, 
+
+\usepackage{polyglossia}
+\setmainlanguage[variant=british]{english}
+
+% Download and install Klavika font on your computer if you don't have it already
+% Or enable your own font declarations
+\usepackage{fontspec}
+\setsansfont[%   
+  ItalicFont={*-RegularItalic},
+  BoldFont={*-Medium},
+  BoldItalicFont={*-MediumItalic},
+]{Klavika}
+
+% set new colors according to AMU design
+\definecolor{CustomDarkBlue}{RGB}{65,102,245}
+\definecolor{CustomLightBlue}{RGB}{110,188,253}
+\definecolor{CustomYellow}{RGB}{246,189,23}
+\usecolortheme[named=CustomDarkBlue]{structure}
+% top bar with section navigation
+\setbeamercolor{palette tertiary}{bg=mdark,fg=white}
+% 2nd top bar with subsection navigation (only if subsection=true)
+\setbeamercolor{palette secondary}{bg=CustomDarkBlue!50,fg=white}
+% title bar of each slide
+\setbeamercolor{titlelike}{bg=CustomDarkBlue,fg=white}
+\setbeamercolor{title}{bg=CustomDarkBlue,fg=white}
+\setbeamercolor{subtitle}{fg=white}
+\setbeamercolor{block body}{bg=CustomDarkBlue!30}
+\setbeamercolor{block title example}{bg=CustomYellow,fg=white}
+\setbeamercolor{block body example}{bg=CustomYellow!30}
+\setbeamercolor{block title alerted}{bg=red,fg=white}
+\setbeamercolor{block body alerted}{bg=red!30}
+\usepackage{etoolbox}
+\AtBeginEnvironment{exampleblock}{%
+  \setbeamercolor{itemize item}{fg=CustomYellow!70}
+}
+\AtBeginEnvironment{alertblock}{%
+  \setbeamercolor{itemize item}{fg=red!70}
+}
+\AtBeginEnvironment{block}{%
+  \setbeamercolor{itemize item}{fg=CustomDarkBlue!70}
+}
+
+% apply default template partials
+\useinnertheme{rectangles}
+\useoutertheme[subsection=false]{miniframes}
+\setbeamertemplate{navigation symbols}{}
+% reset the footer: show slide numbers
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
+    leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    {\usebeamerfont{title in head/foot}\insertshorttitle}%
+    \,
+    {\usebeamerfont{author in head/foot}(\insertshortauthor)}%
+    \hfill
+    {\usebeamerfont{framenumber in head/foot}\textbf{\insertframenumber}}%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
+  \end{beamercolorbox}
+}
+% emphasizing means text in default accent color
+\renewcommand{\emph}[1]{\textcolor{structure}{#1}}
+
+% ------------------ Title Page ------------------
+\makeatletter
+\newcommand\titlegraphicii[1]{\def\inserttitlegraphicii{#1}}
+\titlegraphicii{}
+\setbeamertemplate{title page}
+{
+  \vbox{}
+   {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\hfill\inserttitlegraphicii\par}
+  \begin{centering}
+    \begin{beamercolorbox}[sep=8pt,center]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%     
+    \end{beamercolorbox}%
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}%\vskip0.5em
+    \begin{beamercolorbox}[sep=8pt,center]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+  \end{centering}
+}
+\makeatother
+% ------------------ End Title Page ------------------
+
+% ------------------- include imported packages & macros -------------------
+\input{packages}
+% ------------------- End include package -------------------
+
+
+\title[Short Title]{Long Presentation Title}
+\subtitle{PhD Defense}
+\date{April 21, 2021}
+\author{Author}
+% Logo
+\titlegraphic{\includegraphics[width=2cm, height=1cm]{images/latex}}
+\titlegraphicii{\includegraphics[height=1.2cm,width=1.5cm]{images/latex}}
+
+
+\begin{document}
+    
+
+\begin{frame}[plain]
+    \maketitle
+    \small
+    \vspace{1cm}
+    {\centering Jury Members\par}
+    \vspace{3mm}
+    \small
+    \begin{tabular}[t]{@{}l@{\hspace{3pt}}p{.50\textwidth}@{}}
+        \textbf{Rapporteurs:} & Prof. Full Name \\
+                     & Prof. Full Name \\
+        \textbf{Examinateurs:} & Prof. Full Name \\
+                    & Prof. Full Name
+    \end{tabular}%
+    \small
+    \begin{tabular}[t]{@{}l@{\hspace{3pt}}p{.3\textwidth}@{}}
+        \textbf{Supervisors:}  & Prof. Full Name \\
+                      & Prof. Full Name
+    \end{tabular}%
+\end{frame}
+
+
+\begin{frame}{Outline}
+    \tableofcontents[hideallsubsections]
+\end{frame}
+
+
+\AtBeginSection[]
+{
+ \begin{frame}
+        \frametitle{Section Outline}
+        \tableofcontents[currentsection]
+\end{frame}
+}
+
+
+\input{sections/introduction}
+\input{sections/conclusion}
+
+
+
+
+\begin{frame}[plain]
+
+    \begin{center}
+        {\Huge Thank you}
+    \end{center}
+
+\end{frame}
+
+
+\end{document}
