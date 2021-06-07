@@ -1,0 +1,143 @@
+% -------------------- Macros ----------------------
+\usepackage{hyperref} % this is of \href{}{} or \url{}
+\usepackage{booktabs} % this is for \midrule \toprule etc in tables
+\usepackage{threeparttable}
+\usepackage{pgfplots}
+\usepgfplotslibrary{colorbrewer}
+\usepackage{pgfplotstable}
+\usepackage{amsmath}
+\usepackage{eulervm}
+\usepackage{paralist}
+\usepackage[retainorgcmds]{IEEEtrantools}
+% color
+\usepackage[most]{tcolorbox}
+\definecolor{bblue}{RGB}{55,83,109}
+\definecolor{rred}{RGB}{220,20,60}
+\definecolor{color1}{RGB}{245,245,245}
+\definecolor{color2}{RGB}{218,232,252}
+\definecolor{color3}{RGB}{108,142,191}
+\definecolor{lightrred}{RGB}{255,99,146}
+\definecolor{indigo}{RGB}{255,215,0}
+\definecolor{gold}{RGB}{255,170,0}
+\definecolor{cyan}{RGB}{0,153,102}
+\definecolor{purplex}{RGB}{125,94,248}
+\definecolor{mdark}{RGB}{23,17,36}
+\definecolor{ugblue}{RGB}{0,40,165}
+\definecolor{uzblue}{RGB}{255,79,0}
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgrey}{rgb}{0.3686, 0.5255, 0.6235}
+\definecolor{RYB1}{RGB}{128, 177, 211}
+\definecolor{RYB2}{RGB}{251, 128, 114}
+\definecolor{RYB3}{RGB}{253, 180, 98}
+
+% Itemize
+% \setbeamertemplate{itemize items}{\faAngleRight}
+\setbeamertemplate{itemize subitem}{\textbullet}
+\setbeamertemplate{itemize subsubitem}{\(-\)}
+\setbeamerfont*{itemize body}{size=\large}
+\setbeamerfont*{itemize/enumerate subbody}{parent=itemize/enumerate body}
+\setbeamerfont*{itemize/enumerate subsubbody}{parent=itemize/enumerate body}
+\newenvironment{myitemize}
+{ \begin{itemize}
+    \setlength{\itemsep}{0.4em}
+    \setlength{\parskip}{0.3em}
+    \setlength{\parsep}{0.3em}     }
+{ \end{itemize}                  }
+
+\newenvironment{myenum}
+{ \begin{enumerate}
+    \setlength{\itemsep}{0.4em}
+    \setlength{\parskip}{0.3em}
+    \setlength{\parsep}{0.3em}     }
+{ \end{enumerate}                  }
+
+
+% Tikz package
+\usepackage{tikz}
+\usetikzlibrary{tikzmark, cd,arrows, decorations.markings, backgrounds, automata, shapes.multipart, shapes.geometric, matrix,chains,positioning,shadows, shapes, fit,decorations.pathreplacing,angles,quotes,decorations.pathreplacing,calc,overlay-beamer-styles,trees}
+
+\usepackage{forest}
+
+\tikzset{
+    invisible/.style={opacity=0,every shadow/.style={opacity=0}},
+    visible on/.style={alt=#1{}{invisible}},
+    alt/.code args={<#1>#2#3}{%
+        \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },
+}
+
+\tikzset{
+  treenode/.style = {shape=rectangle, rounded corners,
+                     draw, align=center,
+                     top color=white, bottom color=blue!20},
+  root/.style     = {treenode, font=\Large, bottom color=red!30},
+  env/.style      = {treenode, font=\ttfamily\normalsize},
+  dummy/.style    = {circle,draw}
+}
+
+\usepackage{caption}
+
+% Algorithm package
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{algorithmicx}
+\floatname{algorithm}{Algorithm}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\usepackage{adjustbox}
+% ---- Custom block
+\setbeamertemplate{block begin}{
+	\vspace{\fill}
+	\begin{adjustbox}{max width=0.98\textwidth, trim=0 2ex 0 0,clip}
+		\begin{tabular}{!{\color{CustomDarkBlue}{\vrule width 4pt}}>{\columncolor[gray]{0.97}}m{\textwidth}}
+			\begin{beamercolorbox}{block title} \usebeamerfont*{block title} \vbox{}\vskip 0.2ex \insertblocktitle \end{beamercolorbox}\usebeamerfont*{block text}
+		}
+		\setbeamertemplate{block end}{\end{tabular}\end{adjustbox}}
+% ---- End Custom block
+
+% Custom box
+\newtcolorbox{mybox}[2][]{%
+    colback=bg, 
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    coltitle=blue!75!black, 
+    colbacktitle=bg,
+    enhanced,
+    % attach boxed title to top left={yshift=-1.2mm, xshift=2mm},
+    attach boxed title to top left={yshift=-1.2mm, xshift=-2mm},
+  title=#2,
+  #1}
+
+% table
+\usepackage{booktabs}
+\usepackage{array,multirow,hhline}
+
+% For ranking diagram
+\tikzset{
+  suppress join/.code={\def\tikz@after@path{}},
+  off chain/.code={\def\tikz@lib@on@chain{}}%
+}
+
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+
+% --------------- Fancy item ------------------
+\newcommand{\fancyitem}[3]{%
+    \node[anchor=west] at (1,-\theitemnumber) (titlenode)  {\color{gray}\textcolor<+>{black}{#2}};
+    \fill[alt=<.>{fill=#1}{fill=#1!40!white}] (titlenode.west)++(0,-0.4) rectangle ++(-0.2,0.8);
+    \only<.>{
+      \fill[#1] (titlenode.west)++(-0.2,-0.4) rectangle ++(5,0.05);
+      \node[anchor=north west] (textnode) at (titlenode.west) [xshift=5cm,yshift=-0.3cm, text width=5cm] {#3};  
+      \fill[#1] (titlenode.west)++(4.8,-0.35) rectangle (textnode.south west);
+    }
+    \addtocounter{itemnumber}{1}
+}
+\newcounter{itemnumber}
+% --------------- Fancy item ------------------
+
+\usepackage{multirow,bigdelim}
+\newcommand\MyLBrace[2]{%
+  \left.\rule{0pt}{#1}\right\}\text{#2}}
+\usepackage{bookmark}
+% -------------------- End Macros ----------------------
